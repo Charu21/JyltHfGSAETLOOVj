@@ -47,20 +47,12 @@ Predict how fit the candidate is based on their available information (variable 
 
 # Solution:
 
-## Exploratory data analysis
+After a number of implementations and comparisons (TF-IDF, Word2Vec, Google Word2Vec, Glove, Fasttext and BERT), I was able to find an NLP embedding algorithm which is particularly well suited to our specific use case data , ie. the Word2Vec algorithm trained on the words in this dataset. The candidates in the dataset were ranked based on a fitness score which was based on the cosine similarity metric and normalized connections. The solution also handles manual starring of candidates with reranking based on Learning To Rank algorithm (LambaMart with LightGBM) in which our final predicted_score is better for the candidates that were starred.
 
-## Cleaning data 
+Plus, the solution above becomes better with each starring. This is because as and when the starred candidate sample size increases, it helps our LTR algorithm to learn the patterns in the data better. And hence the better results (which can be seen when number of starred candidates was increased to 10).
 
-## Word embedding
+We can also filter out candidates which should not be in the list by setting a threshold for our fitness score. We can take a safe limit of fitness score threshold as 0.40 as not related or candidates who should not be in the list. 
 
-## Starring candidates
+Human bias in project can be prevented by updating the dataset with keeping a track of list of candidates which actually get selected for specific queries and updating the score to give higher precedence to selected candidates. The ranking algorithm can be reranked and starred candidates can be substituted to selected candidates. This pattern can be learnt and applied to later searches after a generous amount of queries and selected candidates are recorded. Then this procedure will be automated and starring will not be needed, hence no human intervention.
 
-
-## Bonus questions
-
-### We are interested in a robust algorithm, tell us how your solution works and show us how your ranking gets better with each starring action 
-
-### How can we filter out candidates which in the first place should not be in this list? 
-
-
-### Do you have any ideas that we should explore so that we can even automate this procedure to prevent human bias?
+Future enhancements: To implement this on large scale, Fasttext or BERT can be used in the above solution. And the feature set can also be improved by including years of experience, educational qualifications, query related skill set, awards or certificates attained and many more.
